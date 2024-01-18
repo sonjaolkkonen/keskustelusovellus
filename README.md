@@ -1,6 +1,6 @@
 # Keskustelusovellus
 
-Sovellus on klassinen keskusteluforum, joka sisältää eri aiheisiin liittyviä keskustelualueita. Jokainen keskustelualue keskittyy tiettyyn aiheeseen, ja ne muodostuvat viesteistä sisältävistä keskusteluketjuista. Sovelluksella on kahdenlaisia käyttäjiä, peruskäyttäjiä ja ylläpitäjiä. 
+Sovellus on kiipeilyyn keskittyvä keskusteluforum, joka sisältää kiipeilyn eri osa-alueisiin liittyviä keskustelualueita. Jokainen keskustelualue keskittyy tiettyyn aiheeseen, ja ne muodostuvat viestejä sisältävistä keskusteluketjuista. Sovelluksella on kahdenlaisia käyttäjiä, peruskäyttäjiä ja ylläpitäjiä. 
 
 Sovelluksen ominaisuudet:
 
