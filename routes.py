@@ -27,6 +27,7 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+        admin = int(request.form["admin"])
         if password1 != password2:
             return render_template("error.html", message="Antamasi salasanat eivät täsmää.")
         if users.register(username, password1):
