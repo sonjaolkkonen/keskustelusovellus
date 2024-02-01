@@ -30,7 +30,7 @@ def register(username, password, admin):
     return login(username, password)
 
 def user_id():
-    return session.get("user_id",0)
+    return session.get("user_id", 0)
 
 def is_admin():
     if user_id():
@@ -39,4 +39,4 @@ def is_admin():
         is_admin = result.fetchone()
         if is_admin:
             return is_admin[0]
-        return 0
+    return 0

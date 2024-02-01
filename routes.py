@@ -5,7 +5,8 @@ import users
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    user_is_admin = users.is_admin()
+    return render_template("index.html", user_is_admin=user_is_admin)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -30,7 +31,7 @@ def register():
         admin = int(request.form["admin"])
         if password1 != password2:
             return render_template("error.html", message="Antamasi salasanat eivät täsmää.")
-        if users.register(username, password1):
+        if users.register(username, password1, admin):
             return redirect("/")
         else:
             return render_template("error.html", message="Rekisteröinti ei onnistunut.")
@@ -39,3 +40,11 @@ def register():
 def logout():
     users.logout()
     return redirect("/")
+
+@app.route("/topic")
+def topic():
+    user_is_admin = users.is_admin()
+    if users.user_id() and user_is_admin:
+        return render_template("topic.html", user_is_admin = user_is_admin)
+    else:
+        return redirect("/")
