@@ -1,12 +1,13 @@
 from app import app
-from flask import render_template, request, redirect
-import users
+from flask import render_template, request, redirect, session, abort
+import users, topics
 
 
 @app.route("/")
 def index():
     user_is_admin = users.is_admin()
-    return render_template("index.html", user_is_admin=user_is_admin)
+    topics_list = topics.get_list()
+    return render_template("index.html", user_is_admin = user_is_admin, topics = topics_list)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -48,3 +49,14 @@ def topic():
         return render_template("topic.html", user_is_admin = user_is_admin)
     else:
         return redirect("/")
+    
+@app.route("/create_topic", methods=["POST"])
+def create_topic():
+    check_csrf_token()
+    topic = request.form["topic"]
+    if topics.create_topic(topic):
+        return redirect("/")
+
+def check_csrf_token():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
