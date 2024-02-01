@@ -53,6 +53,14 @@
                     <br><br>
                     Kiitos panoksestasi yhteisömme kehittämisessä!
                 </p>
+                <br>
+                <form action="/create_topic" method="POST">
+                    <div class="form-group mb-3">
+                        <input type="text" name="topic" placeholder="Uusi aihealue" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                        <br>
+                        <button type="submit" class="btn btn-primary text-uppercase rounded-pill mb-2 mt-2 border-0 shadow-sm">Lisää</button>
+                        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                    </div>
             </div>
     </body>
 </html>
