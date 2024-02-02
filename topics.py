@@ -20,7 +20,6 @@ def get_id(topic_name):
     sql = text("SELECT id FROM topics WHERE name=:topic_name")
     result = db.session.execute(sql, {"topic_name":topic_name})
     topic_id = result.fetchone()
-    print(topic_id)
     if not topic_id:
         return False
     else:
