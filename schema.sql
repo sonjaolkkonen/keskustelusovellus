@@ -13,6 +13,7 @@ CREATE TABLE topics (
 
 CREATE TABLE messages (
     id SERIAL PRIMARY KEY,
+    headline TEXT,
     content TEXT,
     user_id INTEGER REFERENCES users,
     topic_id INTEGER REFERENCES topics,
