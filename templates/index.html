@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Kiipeilyfoorumi</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link rel="stylesheet" href="./static/styles.css">
+        <link rel="stylesheet" href="/static/styles.css">
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -51,18 +51,30 @@
                     <br><br>
                     Olit sitten aloittelija tai kokenut konkari, liity mukaan keskusteluun, ja tuetaan toinen toisiamme matkallamme kohti uusia huippuja!
                 </p>
-                {% if user_is_admin %}
-                <a href="/topic"> Luo uusi aihealue</a>
+                {% if session.user_id %}
+                <br><br>
+                <div class="card w-75 mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Osallistu keskusteluun</h5>
+                        <a href="/new" class="link-dark">Lähetä uusi viesti</a> {% if user_is_admin %} | <a href="/topic" class="link-dark">Avaa uusi keskustelualue</a> {% endif %}
+                    </div>
+                </div>
                 {% endif %}
             </div>
             <div class="col-4">
                 {% if session.user_id %}
-                Olet kirjautunut sisään.
+                <div class="card mb-4 border-0" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">Hei XX!</h5>
+                      <p class="card-text">Olet kirjautunut sisään.</p>
+                      <a href="/logout" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Kirjaudu ulos</a>
+                    </div>
+                  </div>
                 <br>
-                <a href="/new">Lähetä viesti</a> | <a href="/logout">Kirjaudu ulos</a>
+                
                 {% else %}
                 <h5>Osallistu keskusteluun</h5>
-                <a href="/login">Kirjaudu sisään</a>
+                <a href="/login" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Kirjaudu sisään</a>
                 {% endif %}
             </div>
             </div>
@@ -84,18 +96,18 @@
                             {% endfor %}
                         </ul>
                     </div> -->
-                    <br><br><br>
+                    <br>
                     {% for message in messages %}
                     <div class="p-1 gap-4">
                     <div class="list-group">
-                        <a href="/chat" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                        <img src="https://www.pngfind.com/pngs/m/77-775446_png-file-svg-chat-bubble-icon-png-transparent.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-1">
+                        <a href="/chat/{{ message.id }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                        <img src="https://www.pngfind.com/pngs/m/77-775446_png-file-svg-chat-bubble-icon-png-transparent.png" alt="chat bubble" width="32" height="32" class="rounded-circle flex-shrink-1">
                         <div class="d-flex gap-2 w-100 justify-content-between">
                             <div>
                                 <h6 class="mb-0">{{ message.name }}</h6>
                                 <p class="mb-0 opacity-75">{{ message.headline }}</p>
                             </div>
-                            <small class="opacity-50 text-nowrap">{{ message.sent_at.strftime("%Y-%m-%d %H:%M:%S") }}</small>
+                            <small class="opacity-50 text-nowrap">Viimeisin viesti {{ message.sent_at.strftime("%d.%m.%Y | %H:%M") }}</small>
                         </div>
                         </a>
                     </div>
