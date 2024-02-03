@@ -57,6 +57,12 @@ def create_topic():
     topic = request.form["topic"]
     if topics.create_topic(topic):
         return redirect("/")
+    
+@app.route("/chat/<message_id>")
+def chat(message_id):
+    message_id = message_id
+    message_thread = messages.get_thread(message_id)
+    return render_template("chat.html", thread = message_thread)
 
 @app.route("/new")
 def new():

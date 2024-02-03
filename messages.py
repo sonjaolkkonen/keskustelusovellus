@@ -16,3 +16,9 @@ def send(topic, content, headline):
     db.session.execute(sql, {"headline":headline, "content":content, "user_id":user_id, "topic_id":topic_id})
     db.session.commit()
     return True
+
+def get_thread(message_id):
+    sql = text("SELECT headline, content, sent_at FROM messages WHERE id=:message_id")
+    result = db.session.execute(sql, {"message_id":message_id})
+    message_thread = result.fetchall()
+    return message_thread
