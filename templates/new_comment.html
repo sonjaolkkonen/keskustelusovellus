@@ -19,12 +19,14 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/">Etusivu</a>
                     </li>
+                    {% if not session.user_id %}
                     <li class="nav-item">
                         <a class="nav-link active" href="/login">Kirjaudu</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/register">Rekisteröidy</a>
                     </li>
+                    {% endif %}
                     </ul>
                     <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Etsi keskusteluista" aria-label="Search">

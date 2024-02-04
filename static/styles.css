@@ -15,7 +15,7 @@
     transition: all .7s;
   }
   
-  .btn:hover {
+.btn:hover {
     color: #ff8364;
     background-color: #fff;
     border-color: #ff8364;
@@ -25,3 +25,11 @@
 .navbar-custom .navbar-text {
       color: green;
   }
+
+.dropdown-item:active {
+    background-color: #ff8364 !important;
+}
+
+.dropdown-button:active {
+    background-color: #ff8364 !important;
+}

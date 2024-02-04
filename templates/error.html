@@ -16,28 +16,30 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Etusivu</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="/login">Kirjaudu</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="register">Rekisteröidy</a>
-                  </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Etusivu</a>
+                    </li>
+                    {% if not session.user_id %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/login">Kirjaudu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="register">Rekisteröidy</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
             </div>
-          </nav>
+        </nav>
         <div class="my-5">
             <div class="p-5 text-center bg-body-tertiary">
-              <div class="container py-5">
-                <h1 class="display-3">Hups! Jotain meni vikaan.</h1>
-                <br>
-                <p class="lead">{{ message }}</p>
-                <p>Palaa takaisin <a href="/" class="font-italic text-muted"><u>etusivulle</u></a></p>
-              </div>
+                <div class="container py-5">
+                    <h1 class="display-3">Hups! Jotain meni vikaan.</h1>
+                    <br>
+                    <p class="lead">{{ message }}</p>
+                    <p>Palaa takaisin <a href="/" class="font-italic text-muted"><u>etusivulle</u></a></p>
+                </div>
             </div>
-          </div>
+        </div>
     </body>
 </html>

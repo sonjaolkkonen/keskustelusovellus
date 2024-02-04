@@ -19,12 +19,14 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/">Etusivu</a>
                     </li>
+                    {% if not session.user_id %}
                     <li class="nav-item">
                         <a class="nav-link active" href="/login">Kirjaudu</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/register">Rekisteröidy</a>
                     </li>
+                    {% endif %}
                     </ul>
                     <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Etsi keskusteluista" aria-label="Search">
@@ -65,9 +67,9 @@
                 {% if session.user_id %}
                 <div class="card mb-4 border-0" style="width: 18rem;">
                     <div class="card-body">
-                      <h5 class="card-title">Hei XX!</h5>
-                      <p class="card-text">Olet kirjautunut sisään.</p>
-                      <a href="/logout" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Kirjaudu ulos</a>
+                        <h5 class="card-title">Hei XX!</h5> 
+                        <p class="card-text">Olet kirjautunut sisään.</p>
+                        <a href="/logout" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Kirjaudu ulos</a>
                     </div>
                   </div>
                 <br>
@@ -86,8 +88,8 @@
                     <br><br>
                     <h1 class="display-6">Keskustelut</h1>
                     <br>
-                    <!-- <div class="btn-group">
-                        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="btn-group">
+                        <button class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Valitse aihealue
                         </button>
                         <ul class="dropdown-menu">
@@ -95,8 +97,9 @@
                             <li><a class="dropdown-item" href="#">{{ topic.name }}</a></li>
                             {% endfor %}
                         </ul>
-                    </div> -->
+                    </div>
                     <br>
+                    <br><br>
                     {% for message in messages %}
                     <div class="p-1 gap-4">
                     <div class="list-group">
