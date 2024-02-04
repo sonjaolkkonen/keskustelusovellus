@@ -46,13 +46,25 @@
             <div class="row">
             <div class="col-8">
                 <p>
-                    <h1 class="display-6">{{ thread[0][0] }}</h1>
+                    <h1 class="display-6">{{ thread[0][1] }}</h1>
                     <br>
-                    <small class="opacity-50 text-end">{{ thread[0][2].strftime("%d.%m.%Y | %H:%M") }}</small>
+                    <small class="opacity-50 text-end">{{ thread[0][3].strftime("%d.%m.%Y | %H:%M") }}</small>
                     <br><br>
-                    {{ thread[0][1] }}
-                    <br>
+                    {{ thread[0][2] }}
+                    <br><br><br>
+                    <a href="/new_comment/{{ thread[0][0] }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Kommentoi</a>
+                    <br><br>
                     <hr class="hr" />
+
+                {% if comments %}
+                    {% for comment in comments %}
+                    <small class="opacity-50 text-end">{{ comment.sent_at.strftime("%d.%m.%Y | %H:%M") }}</small>
+                    <br><br>
+                    {{ comment.content }}
+                    <br><br>
+                    <hr class="hr" />
+                    {% endfor %}
+                {% endif %}
                 </p>
             </div>
             </div>

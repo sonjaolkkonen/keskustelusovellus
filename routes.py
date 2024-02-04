@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, session, abort
-import users, topics, messages
+import users, topics, messages, comments
 
 
 @app.route("/")
@@ -62,7 +62,8 @@ def create_topic():
 def chat(message_id):
     message_id = message_id
     message_thread = messages.get_thread(message_id)
-    return render_template("chat.html", thread = message_thread)
+    message_comments = comments.get_comments(message_id)
+    return render_template("chat.html", thread = message_thread, comments = message_comments)
 
 @app.route("/new")
 def new():
@@ -79,6 +80,23 @@ def send():
         return redirect("/")
     else:
         return render_template("error.html", message="Viestin lähetys ei onnistunut.")
+
+@app.route("/new_comment/<message_id>")
+def new_comment(message_id):
+    message_id = message_id
+    return render_template("new_comment.html", message_id=message_id)
+
+@app.route("/send_comment", methods=["POST"])
+def send_comment():
+    check_csrf_token()
+    content = request.form["content"]
+    message_id = request.form["message_id"]
+    if comments.send(content, message_id):
+        message_thread = messages.get_thread(message_id)
+        message_comments = comments.get_comments(message_id)
+        return render_template("chat.html", thread = message_thread, comments = message_comments)
+    else:
+        return render_template("error.html", message="Kommentin lisääminen ei onnistunut.")
 
 def check_csrf_token():
     if session["csrf_token"] != request.form["csrf_token"]:

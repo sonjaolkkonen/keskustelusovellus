@@ -45,22 +45,13 @@
         <div class="container">
             <div class="row">
             <div class="col-8">
-                <form action="/send" method="POST">
-                    <select class="form-select" name="topic">
-                        <option selected>Valitse alue</option>
-                        {% for topic in topics %}
-                        <option value="{{ topic.name }}">{{ topic.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <div class="mb-3">
-                        <label for="headline" class="form-label"></label>
-                        <input type="text" class="form-control" name="headline" placeholder="Otsikko" required="">
-                    </div>
+                <form action="/send_comment" method="POST">
                     <div class="mb-3">
                         <label for="content" class="form-label"></label>
                         <textarea class="form-control" name="content" rows="3" required=""></textarea>
                     </div>
                         <button type="submit" class="btn btn-primary text-uppercase rounded-pill mb-2 mt-2 border-0 shadow-sm">Lähetä</button>
+                        <input type="hidden" name="message_id" value="{{ message_id }}">
                         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                     </div>
                 </form>

@@ -20,3 +20,12 @@ CREATE TABLE messages (
     sent_at TIMESTAMP,
     like_count INTEGER
 );
+
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    content TEXT,
+    user_id INTEGER REFERENCES users,
+    message_id INTEGER REFERENCES messages,
+    sent_at TIMESTAMP,
+    like_count INTEGER
+);
