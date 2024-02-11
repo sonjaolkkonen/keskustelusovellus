@@ -22,3 +22,10 @@ def get_thread(message_id):
     result = db.session.execute(sql, {"message_id":message_id})
     message_thread = result.fetchall()
     return message_thread
+
+def filter_by_topic(topic):
+    topic_id = topics.get_id(topic)
+    sql = text("SELECT M.id, M.headline, M.content, M.user_id, M.sent_at, T.name, U.username FROM messages M, topics T, users U WHERE M.user_id=U.id AND M.topic_id=T.id AND T.name=:topic ORDER BY M.id")
+    result = db.session.execute(sql, {"topic":topic})
+    filter_result = result.fetchall()
+    return filter_result

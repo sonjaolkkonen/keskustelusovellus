@@ -97,6 +97,16 @@ def send_comment():
         return render_template("chat.html", thread = message_thread, comments = message_comments)
     else:
         return render_template("error.html", message="Kommentin lisääminen ei onnistunut.")
+    
+@app.route("/filter_by_topic/<topic>")
+def filter_by_topic(topic):
+    topic = topic
+    if topic == "None":
+        return redirect("/")
+    user_is_admin = users.is_admin()
+    filter_result = messages.filter_by_topic(topic)
+    return render_template("filter_by_topic.html", user_is_admin = user_is_admin, messages = filter_result)
+
 
 def check_csrf_token():
     if session["csrf_token"] != request.form["csrf_token"]:
