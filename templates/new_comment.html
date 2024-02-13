@@ -28,9 +28,9 @@
                     </li>
                     {% endif %}
                     </ul>
-                    <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Etsi keskusteluista" aria-label="Search">
-                    <button class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm" type="submit">Etsi</button>
+                    <form action="/search" method="GET" class="d-flex">
+                    <input class="form-control me-2" type="text" placeholder="Etsi keskustelun aloituksia" name="query">
+                    <input type="submit" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm" value="Etsi">
                     </form>
                 </div>
             </div>

@@ -107,6 +107,12 @@ def filter_by_topic(topic):
     filter_result = messages.filter_by_topic(topic)
     return render_template("filter_by_topic.html", user_is_admin = user_is_admin, messages = filter_result)
 
+@app.route("/search")
+def search():
+    query = request.args["query"]
+    user_is_admin = users.is_admin()
+    search_result = messages.search(query)
+    return render_template("search.html", messages=search_result, user_is_admin=user_is_admin)
 
 def check_csrf_token():
     if session["csrf_token"] != request.form["csrf_token"]:
