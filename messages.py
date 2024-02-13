@@ -18,7 +18,7 @@ def send(topic, content, headline):
     return True
 
 def get_thread(message_id):
-    sql = text("SELECT id, headline, content, sent_at FROM messages WHERE id=:message_id AND visible=1")
+    sql = text("SELECT id, headline, content, sent_at, user_id FROM messages WHERE id=:message_id AND visible=1")
     result = db.session.execute(sql, {"message_id":message_id})
     message_thread = result.fetchall()
     return message_thread
@@ -44,19 +44,19 @@ def delete_message(message_id):
     
     return False
 
+def edit_message(message_id, edit):
+    if is_users_message(message_id):
+        sql = text("UPDATE messages SET content=:edit WHERE id=:message_id")
+        db.session.execute(sql, {"edit":edit, "message_id":message_id})
+        db.session.commit()
+        return True
+    return False
+
 def is_users_message(message_id):
     user_id = users.user_id()
     sql = text("SELECT id, headline, content, user_id, topic_id, sent_at FROM posts WHERE user_id=:user_id AND id=:message_id")
     result = db.session.execute(sql, {"user_id":user_id, "message_id":message_id})
     if result.fetchone() != None:
-        return True
-    else:
-        return False
-
-def is_deleted(message_id):
-    sql = text("SELECT visible FROM messages WHERE id=:message_id")
-    result = db.session.execute(sql, {"message_id":message_id}).fetchone()
-    if result[0] == 0:
         return True
     else:
         return False

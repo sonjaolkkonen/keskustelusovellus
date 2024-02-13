@@ -128,7 +128,7 @@ def remove_comment(comment_id):
     
 @app.route("/edit_comment/<message_id>/<comment_id>")
 def edit_comment(comment_id, message_id):
-    return render_template("edit.html", comment_id=comment_id, message_id=message_id)
+    return render_template("edit_comment.html", comment_id=comment_id, message_id=message_id)
 
 @app.route("/send_comment_edit", methods=["POST"])
 def send_comment_edit():
@@ -140,6 +140,20 @@ def send_comment_edit():
         return redirect(url_for("chat", message_id=message_id))
     else:
         return render_template("error.html", message="Kommentin muokkaaminen ei onnistunut.")
+    
+@app.route("/edit_message/<message_id>")
+def edit_message(message_id):
+    return render_template("edit_message.html", message_id=message_id)
+
+@app.route("/send_message_edit", methods=["POST"])
+def send_message_edit():
+    check_csrf_token()
+    edit = request.form["content"]
+    message_id = request.form["message_id"]
+    if messages.edit_message(message_id, edit):
+        return redirect(url_for("chat", message_id=message_id))
+    else:
+        return render_template("error.html", message="Viestin muokkaaminen ei onnistunut.")
 
 def check_csrf_token():
     if session["csrf_token"] != request.form["csrf_token"]:
