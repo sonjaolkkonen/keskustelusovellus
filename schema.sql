@@ -18,7 +18,7 @@ CREATE TABLE messages (
     user_id INTEGER REFERENCES users,
     topic_id INTEGER REFERENCES topics,
     sent_at TIMESTAMP,
-    like_count INTEGER
+    visible INTEGER,
 );
 
 CREATE TABLE comments (
@@ -27,5 +27,5 @@ CREATE TABLE comments (
     user_id INTEGER REFERENCES users,
     message_id INTEGER REFERENCES messages,
     sent_at TIMESTAMP,
-    like_count INTEGER
+    visible INTEGER,
 );

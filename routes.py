@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, session, abort
+from flask import render_template, request, redirect, session, abort, flash, url_for
 import users, topics, messages, comments
 
 
@@ -63,7 +63,8 @@ def chat(message_id):
     message_id = message_id
     message_thread = messages.get_thread(message_id)
     message_comments = comments.get_comments(message_id)
-    return render_template("chat.html", thread = message_thread, comments = message_comments)
+    user_is_admin = users.is_admin()
+    return render_template("chat.html", thread = message_thread, comments = message_comments, user_is_admin = user_is_admin)
 
 @app.route("/new")
 def new():
@@ -92,9 +93,7 @@ def send_comment():
     content = request.form["content"]
     message_id = request.form["message_id"]
     if comments.send(content, message_id):
-        message_thread = messages.get_thread(message_id)
-        message_comments = comments.get_comments(message_id)
-        return render_template("chat.html", thread = message_thread, comments = message_comments)
+        return redirect(url_for("chat", message_id=message_id))
     else:
         return render_template("error.html", message="Kommentin lisääminen ei onnistunut.")
     
@@ -113,6 +112,16 @@ def search():
     user_is_admin = users.is_admin()
     search_result = messages.search(query)
     return render_template("search.html", messages=search_result, user_is_admin=user_is_admin)
+
+@app.route("/remove_message/<message_id>")
+def remove_message(message_id):
+    if messages.delete_message(message_id):
+        return redirect("/")
+
+@app.route("/remove_comment/<comment_id>")
+def remove_comment(comment_id):
+    if comments.delete_comment(comment_id):
+        return redirect(request.referrer)
 
 def check_csrf_token():
     if session["csrf_token"] != request.form["csrf_token"]:

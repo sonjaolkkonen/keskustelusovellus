@@ -55,6 +55,9 @@
                     {{ thread[0][2] }}
                     <br><br><br>
                     <a href="/new_comment/{{ thread[0][0] }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Kommentoi</a>
+                    {% if session.user_id==thread[0][3] or user_is_admin %}
+                    <a href="/remove_message/{{ thread[0][0] }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Poista</a>
+                    {% endif %}
                     <br><br>
                     <hr class="hr" />
 
@@ -64,6 +67,9 @@
                     <br><br>
                     {{ comment.content }}
                     <br><br>
+                    {% if session.user_id==comment.user_id or user_is_admin %}
+                    <a href="/remove_comment/{{ comment.id }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Poista</a>
+                    {% endif %}
                     <hr class="hr" />
                     {% endfor %}
                 {% endif %}
