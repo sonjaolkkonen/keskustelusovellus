@@ -104,7 +104,10 @@ def filter_by_topic(topic):
         return redirect("/")
     user_is_admin = users.is_admin()
     filter_result = messages.filter_by_topic(topic)
-    return render_template("filter_by_topic.html", user_is_admin = user_is_admin, messages = filter_result)
+    if filter_result == []:
+        return render_template("error.html", message="Ei vielä aloitettuja keskusteluita.")
+    else:
+        return render_template("filter_by_topic.html", user_is_admin = user_is_admin, messages = filter_result)
 
 @app.route("/search")
 def search():
