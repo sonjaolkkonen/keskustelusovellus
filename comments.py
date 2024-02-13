@@ -26,6 +26,13 @@ def delete_comment(comment_id):
         return True
     return False
 
+def edit_comment(comment_id, edit):
+    if is_users_comment(comment_id):
+        sql = text("UPDATE comments SET content=:edit WHERE id=:comment_id")
+        db.session.execute(sql, {"edit":edit, "comment_id":comment_id})
+        db.session.commit()
+        return True
+    return False
 
 def is_users_comment(comment_id):
     user_id = users.user_id()
