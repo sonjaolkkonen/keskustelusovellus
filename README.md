@@ -19,7 +19,11 @@ Sovelluksen ominaisuudet:
 - Käyttäjä näkee sovelluksen etusivulla listan viestiketjuista ja mihin keskustelualueeseen mikin ketju kuuluu sekä viestiketjun aloitusajankohdan.
 - Käyttäjä voi luoda alueelle uuden ketjun antamalla ketjun otsikon ja aloitusviestin sisällön.
 - Käyttäjä voi kirjoittaa uuden viestin olemassa olevaan ketjuun.
+- Käyttäjä voi muokata luomansa ketjun otsikkoa sekä lähettämänsä viestin sisältöä. Käyttäjä voi myös poistaa ketjun tai viestin.
+- Käyttäjä voi etsiä kaikki keskustelun aloitukset, joiden osana on annettu sana.
+- Käyttäjä voi äänestää viestejä. 
 - Ylläpitäjä voi lisätä keskustelualueita.
+- Ylläpitäjä voi poistaa myös muiden lähettämiä ketjuja ja viestejä.
 
 ## Käynnistysohjeet
 
