@@ -19,6 +19,8 @@ CREATE TABLE messages (
     topic_id INTEGER REFERENCES topics,
     sent_at TIMESTAMP,
     visible INTEGER,
+    up_votes INTEGER,
+    down_votes INTEGER
 );
 
 CREATE TABLE comments (
@@ -27,17 +29,12 @@ CREATE TABLE comments (
     user_id INTEGER REFERENCES users,
     message_id INTEGER REFERENCES messages,
     sent_at TIMESTAMP,
-    visible INTEGER,
+    visible INTEGER
 );
 
 CREATE TABLE votes (
     id SERIAL PRIMARY KEY,
-    down_votes INTEGER,
-    up_votes INTEGER,
-    all_votes INTEGER,
     user_id INTEGER REFERENCES users,
     message_id INTEGER REFERENCES messages,
-    comment_id INTEGER REFERENCES comments,
-    UNIQUE(user_id,message_id),
-    UNIQUE(user_id,comment_id)
+    voted INTEGER
 );

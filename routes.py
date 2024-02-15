@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, session, abort, flash, url_for
-import users, topics, messages, comments, votes
+import users, topics, messages, comments
 
 
 @app.route("/")
@@ -64,9 +64,7 @@ def chat(message_id):
     message_thread = messages.get_thread(message_id)
     message_comments = comments.get_comments(message_id)
     user_is_admin = users.is_admin()
-    up_votes = votes.get_message_up_votes(message_id)
-    down_votes = votes.get_message_down_votes(message_id)
-    return render_template("chat.html", thread = message_thread, comments = message_comments, user_is_admin = user_is_admin, up_votes=up_votes, down_votes=down_votes)
+    return render_template("chat.html", thread = message_thread, comments = message_comments, user_is_admin = user_is_admin)
 
 @app.route("/new")
 def new():
@@ -157,16 +155,16 @@ def send_message_edit():
     else:
         return render_template("error.html", message="Viestin muokkaaminen ei onnistunut.")
     
-@app.route("/down_vote_message/<message_id>")
-def down_vote(message_id):
-    if votes.send_message_vote(-1, message_id):
+@app.route("/up_vote_message/<message_id>")
+def up_vote(message_id):
+    if messages.vote_message(1, message_id):
         return redirect(request.referrer)
     else:
         return redirect(request.referrer)
     
-@app.route("/up_vote_message/<message_id>")
-def up_vote(message_id):
-    if votes.send_message_vote(1, message_id):
+@app.route("/down_vote_message/<message_id>")
+def down_vote(message_id):
+    if messages.vote_message(-1, message_id):
         return redirect(request.referrer)
     else:
         return redirect(request.referrer)
