@@ -57,3 +57,17 @@ def check_if_voted(user_id, message_id):
         return True
     else:
         return False
+    
+def has_voted_comment(user_id, message_id, comment_id):
+    sql = text("INSERT INTO votes (user_id, message_id, comment_id) VALUES (:user_id, :message_id, :comment_id)")
+    db.session.execute(sql, {"user_id":user_id, "message_id":message_id, "comment_id":comment_id})
+    db.session.commit()
+    return True
+        
+def check_if_voted_comment(user_id, message_id, comment_id):
+    sql = text("SELECT message_id, comment_id, user_id FROM votes WHERE message_id=:message_id AND comment_id=:comment_id AND user_id=:user_id")
+    result = db.session.execute(sql, {"message_id":message_id, "comment_id":comment_id, "user_id":user_id})
+    if result.fetchone() != None:
+        return True
+    else:
+        return False

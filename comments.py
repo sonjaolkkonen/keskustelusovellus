@@ -5,7 +5,7 @@ import users
 
 def get_comments(message_id):
     user_id = users.user_id()
-    sql = text("SELECT C.content, U.username, C.sent_at, C.id, C.user_id FROM comments C, users U WHERE C.message_id=:message_id AND U.id=C.user_id AND C.visible=1 ORDER BY C.sent_at ASC")
+    sql = text("SELECT C.content, U.username, C.sent_at, C.id, C.user_id, C.up_votes, C.down_votes FROM comments C, users U WHERE C.message_id=:message_id AND U.id=C.user_id AND C.visible=1 ORDER BY C.sent_at ASC")
     result = db.session.execute(sql, {"user":user_id, "message_id":message_id})
     return result.fetchall()
 
@@ -13,7 +13,7 @@ def send(content, message_id):
     user_id = users.user_id()
     if user_id == None:
         return False
-    sql = text("INSERT INTO comments (content, user_id, message_id, sent_at, visible) VALUES (:content, :user_id, :message_id, NOW(), 1)")
+    sql = text("INSERT INTO comments (content, user_id, message_id, sent_at, visible, up_votes, down_votes) VALUES (:content, :user_id, :message_id, NOW(), 1, 0, 0)")
     db.session.execute(sql, {"content":content, "user_id":user_id, "message_id":message_id})
     db.session.commit()
     return True
@@ -42,3 +42,29 @@ def is_users_comment(comment_id):
         return True
     else:
         return False
+
+def vote_comment(vote, message_id, comment_id):
+    user_id = users.user_id()
+    has_voted = users.check_if_voted_comment(user_id, message_id, comment_id)
+    if user_id == 0 or has_voted:
+        return False
+
+    if vote == -1:
+        try:
+            sql = text("UPDATE comments SET down_votes=down_votes+1 WHERE id=:comment_id")
+            db.session.execute(sql, {"comment_id":comment_id})
+            db.session.commit()
+            users.has_voted_comment(user_id, message_id, comment_id)
+            return True
+        except:
+            return False
+            
+    elif vote == 1:
+        try:
+            sql = text("UPDATE comments SET up_votes=up_votes+1 WHERE id=:comment_id")
+            db.session.execute(sql, {"comment_id":comment_id})
+            db.session.commit()
+            users.has_voted_comment(user_id, message_id, comment_id)
+            return True
+        except:
+            return False

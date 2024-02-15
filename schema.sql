@@ -29,12 +29,14 @@ CREATE TABLE comments (
     user_id INTEGER REFERENCES users,
     message_id INTEGER REFERENCES messages,
     sent_at TIMESTAMP,
-    visible INTEGER
+    visible INTEGER,
+    up_votes INTEGER,
+    down_votes INTEGER
 );
 
 CREATE TABLE votes (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
     message_id INTEGER REFERENCES messages,
-    voted INTEGER
+    comment_id INTEGER REFERENCES comments
 );
