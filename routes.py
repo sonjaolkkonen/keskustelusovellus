@@ -124,6 +124,7 @@ def remove_message(message_id):
 @app.route("/remove_comment/<comment_id>")
 def remove_comment(comment_id):
     if comments.delete_comment(comment_id):
+        flash("Viesti poistettu")
         return redirect(request.referrer)
     
 @app.route("/edit_comment/<message_id>/<comment_id>")
@@ -184,7 +185,7 @@ def down_vote_comment(message_id, comment_id):
     if comments.vote_comment(-1, message_id, comment_id):
         return redirect(request.referrer)
     else:
-        flash("Testi")
+        flash("Olet jo äänestänyt")
         return redirect(request.referrer)
 
 def check_csrf_token():
