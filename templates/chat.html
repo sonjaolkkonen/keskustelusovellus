@@ -50,8 +50,8 @@
                 <p>
                     <h1 class="display-6">{{ thread[0][1] }}</h1>
                     <br>
+                    {% include "message.html" %}
                     <small class="opacity-75 text-end">{{ thread[0][3].strftime("%d.%m.%Y | %H:%M") }}</small>
-                      
                     <div class="d-flex justify-content-end">
                         <a class="icon-link link-dark" href="/up_vote_message/{{ thread[0][0] }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
@@ -108,9 +108,11 @@
                     {% if session.user_id==comment.user_id or user_is_admin %}
                     <a href="/remove_comment/{{ comment.id }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Poista</a>
                     {% endif %}
+                    <br><br>
                     <hr class="hr" />
                     {% endfor %}
                 {% endif %}
+                <br><br>
                 </p>
             </div>
             </div>

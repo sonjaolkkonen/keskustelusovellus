@@ -160,6 +160,7 @@ def up_vote(message_id):
     if messages.vote_message(1, message_id):
         return redirect(request.referrer)
     else:
+        flash("Olet jo äänestänyt")
         return redirect(request.referrer)
     
 @app.route("/down_vote_message/<message_id>")
@@ -167,6 +168,7 @@ def down_vote(message_id):
     if messages.vote_message(-1, message_id):
         return redirect(request.referrer)
     else:
+        flash("Olet jo äänestänyt")
         return redirect(request.referrer)
     
 @app.route("/up_vote_comment/<message_id>/<comment_id>")
@@ -174,6 +176,7 @@ def up_vote_comment(message_id, comment_id):
     if comments.vote_comment(1, message_id, comment_id):
         return redirect(request.referrer)
     else:
+        flash("Olet jo äänestänyt")
         return redirect(request.referrer)
     
 @app.route("/down_vote_comment/<message_id>/<comment_id>")
@@ -181,6 +184,7 @@ def down_vote_comment(message_id, comment_id):
     if comments.vote_comment(-1, message_id, comment_id):
         return redirect(request.referrer)
     else:
+        flash("Testi")
         return redirect(request.referrer)
 
 def check_csrf_token():
