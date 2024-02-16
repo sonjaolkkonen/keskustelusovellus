@@ -56,19 +56,17 @@ def check_if_voted(user_id, message_id):
         return True
     return False
 
-def has_voted_comment(user_id, message_id, comment_id):
-    sql = text("""INSERT INTO votes (user_id, message_id, comment_id)
-               VALUES (:user_id, :message_id, :comment_id)""")
-    db.session.execute(sql, {"user_id":user_id, "message_id":message_id, "comment_id":comment_id})
+def has_voted_comment(user_id, comment_id):
+    sql = text("""INSERT INTO votes (user_id, comment_id)
+               VALUES (:user_id, :comment_id)""")
+    db.session.execute(sql, {"user_id":user_id, "comment_id":comment_id})
     db.session.commit()
     return True
 
-def check_if_voted_comment(user_id, message_id, comment_id):
-    sql = text("""SELECT message_id, comment_id, user_id FROM votes
-               WHERE message_id=:message_id AND
-               comment_id=:comment_id AND user_id=:user_id""")
-    result = db.session.execute(sql, {"message_id":message_id, "comment_id":comment_id,
-                                      "user_id":user_id})
+def check_if_voted_comment(user_id, comment_id):
+    sql = text("""SELECT comment_id, user_id FROM votes
+               WHERE comment_id=:comment_id AND user_id=:user_id""")
+    result = db.session.execute(sql, {"comment_id":comment_id, "user_id":user_id})
     if result.fetchone() is not None:
         return True
     return False

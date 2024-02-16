@@ -62,9 +62,9 @@ def is_users_comment(comment_id):
         return True
     return False
 
-def vote_comment(vote, message_id, comment_id):
+def vote_comment(vote, comment_id):
     user_id = users.user_id()
-    has_voted = users.check_if_voted_comment(user_id, message_id, comment_id)
+    has_voted = users.check_if_voted_comment(user_id, comment_id)
     if user_id == 0 or has_voted:
         return False
 
@@ -73,7 +73,7 @@ def vote_comment(vote, message_id, comment_id):
             sql = text("UPDATE comments SET down_votes=down_votes+1 WHERE id=:comment_id")
             db.session.execute(sql, {"comment_id":comment_id})
             db.session.commit()
-            users.has_voted_comment(user_id, message_id, comment_id)
+            users.has_voted_comment(user_id, comment_id)
             return True
         except:
             return False
@@ -83,7 +83,7 @@ def vote_comment(vote, message_id, comment_id):
             sql = text("UPDATE comments SET up_votes=up_votes+1 WHERE id=:comment_id")
             db.session.execute(sql, {"comment_id":comment_id})
             db.session.commit()
-            users.has_voted_comment(user_id, message_id, comment_id)
+            users.has_voted_comment(user_id, comment_id)
             return True
         except:
             return False

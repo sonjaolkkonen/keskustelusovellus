@@ -168,16 +168,16 @@ def down_vote(message_id):
     flash("Olet jo äänestänyt")
     return redirect(request.referrer)
 
-@app.route("/up_vote_comment/<message_id>/<comment_id>")
-def up_vote_comment(message_id, comment_id):
-    if comments.vote_comment(1, message_id, comment_id):
+@app.route("/up_vote_comment/<comment_id>")
+def up_vote_comment(comment_id):
+    if comments.vote_comment(1, comment_id):
         return redirect(request.referrer)
     flash("Olet jo äänestänyt")
     return redirect(request.referrer)
 
-@app.route("/down_vote_comment/<message_id>/<comment_id>")
-def down_vote_comment(message_id, comment_id):
-    if comments.vote_comment(-1, message_id, comment_id):
+@app.route("/down_vote_comment/<comment_id>")
+def down_vote_comment(comment_id):
+    if comments.vote_comment(-1, comment_id):
         return redirect(request.referrer)
     flash("Olet jo äänestänyt")
     return redirect(request.referrer)
