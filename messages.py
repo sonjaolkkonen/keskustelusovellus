@@ -12,10 +12,13 @@ def send(topic, content, headline):
     topic_id = topics.get_id(topic)
     if user_id == 0:
         return False
-    sql = text("INSERT INTO messages (headline, content, user_id, topic_id, sent_at, visible, up_votes, down_votes) VALUES (:headline, :content, :user_id, :topic_id, NOW(), 1, 0, 0)")
-    db.session.execute(sql, {"headline":headline, "content":content, "user_id":user_id, "topic_id":topic_id})
-    db.session.commit()
-    return True
+    try:
+        sql = text("INSERT INTO messages (headline, content, user_id, topic_id, sent_at, visible, up_votes, down_votes) VALUES (:headline, :content, :user_id, :topic_id, NOW(), 1, 0, 0)")
+        db.session.execute(sql, {"headline":headline, "content":content, "user_id":user_id, "topic_id":topic_id})
+        db.session.commit()
+        return True
+    except:
+        return False
 
 def get_thread(message_id):
     sql = text("SELECT id, headline, content, sent_at, user_id, up_votes, down_votes FROM messages WHERE id=:message_id AND visible=1")
