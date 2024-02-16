@@ -8,7 +8,9 @@ def index():
     user_is_admin = users.is_admin()
     topics_list = topics.get_list()
     messages_list = messages.get_list()
-    return render_template("index.html", user_is_admin = user_is_admin, topics = topics_list, messages = messages_list)
+    amount_of_comments = comments.get_amount_of_comments()
+    times = comments.get_comment_time()
+    return render_template("index.html", user_is_admin = user_is_admin, topics = topics_list, messages = messages_list, comments=amount_of_comments, times=times)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

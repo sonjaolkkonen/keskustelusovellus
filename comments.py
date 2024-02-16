@@ -2,11 +2,23 @@ from sqlalchemy.sql import text
 from db import db
 from flask import session
 import users
+import locale
 
 def get_comments(message_id):
     user_id = users.user_id()
     sql = text("SELECT C.content, U.username, C.sent_at, C.id, C.user_id, C.up_votes, C.down_votes FROM comments C, users U WHERE C.message_id=:message_id AND U.id=C.user_id AND C.visible=1 ORDER BY C.sent_at ASC")
     result = db.session.execute(sql, {"user":user_id, "message_id":message_id})
+    return result.fetchall()
+
+def get_amount_of_comments():
+    sql = text("SELECT message_id, COUNT(message_id) FROM comments WHERE visible=1 GROUP BY message_id")
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+def get_comment_time():
+    locale.setlocale(locale.LC_TIME, 'fi_FI.UTF-8')
+    sql = text("SELECT message_id, sent_at FROM comments WHERE id IN (SELECT MAX(id) FROM comments WHERE visible=1 GROUP BY message_id)")
+    result = db.session.execute(sql)
     return result.fetchall()
 
 def send(content, message_id):
