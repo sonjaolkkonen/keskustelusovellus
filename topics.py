@@ -22,5 +22,4 @@ def get_id(topic_name):
     topic_id = result.fetchone()
     if not topic_id:
         return False
-    else:
-        return topic_id[0]
+    return topic_id[0]

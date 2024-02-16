@@ -1,6 +1,9 @@
-from app import app
 from flask import render_template, request, redirect, session, abort, flash, url_for
-import users, topics, messages, comments
+from app import app
+import users
+import topics
+import messages
+import comments
 
 
 @app.route("/")
@@ -10,7 +13,8 @@ def index():
     messages_list = messages.get_list()
     amount_of_comments = comments.get_amount_of_comments()
     times = comments.get_comment_time()
-    return render_template("index.html", user_is_admin = user_is_admin, topics = topics_list, messages = messages_list, comments=amount_of_comments, times=times)
+    return render_template("index.html", user_is_admin = user_is_admin, topics = topics_list,
+                           messages = messages_list, comments=amount_of_comments, times=times)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -21,9 +25,9 @@ def login():
         password = request.form["password"]
         if users.login(username, password):
             return redirect("/")
-        else:
-            return render_template("error.html", message="Antamasi käyttäjätunnus tai salasana on väärä.")
-        
+        return render_template("error.html",
+                                message="Antamasi käyttäjätunnus tai salasana on väärä.")
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
@@ -37,9 +41,8 @@ def register():
             return render_template("error.html", message="Antamasi salasanat eivät täsmää.")
         if users.register(username, password1, admin):
             return redirect("/")
-        else:
-            return render_template("error.html", message="Rekisteröinti ei onnistunut.")
-        
+        return render_template("error.html", message="Rekisteröinti ei onnistunut.")
+
 @app.route("/logout")
 def logout():
     users.logout()
@@ -50,23 +53,22 @@ def topic():
     user_is_admin = users.is_admin()
     if users.user_id() and user_is_admin:
         return render_template("topic.html", user_is_admin = user_is_admin)
-    else:
-        return redirect("/")
-    
+    return redirect("/")
+
 @app.route("/create_topic", methods=["POST"])
 def create_topic():
     check_csrf_token()
-    topic = request.form["topic"]
-    if topics.create_topic(topic):
+    new_topic = request.form["topic"]
+    if topics.create_topic(new_topic):
         return redirect("/")
-    
+
 @app.route("/chat/<message_id>")
 def chat(message_id):
-    message_id = message_id
     message_thread = messages.get_thread(message_id)
     message_comments = comments.get_comments(message_id)
     user_is_admin = users.is_admin()
-    return render_template("chat.html", thread = message_thread, comments = message_comments, user_is_admin = user_is_admin)
+    return render_template("chat.html", thread = message_thread,
+                           comments = message_comments, user_is_admin = user_is_admin)
 
 @app.route("/new")
 def new():
@@ -77,16 +79,14 @@ def new():
 def send():
     check_csrf_token()
     headline = request.form["headline"]
-    topic = request.form["topic"]
+    message_topic = request.form["topic"]
     content = request.form["content"]
-    if messages.send(topic, content, headline):
+    if messages.send(message_topic, content, headline):
         return redirect("/")
-    else:
-        return render_template("error.html", message="Viestin lähetys ei onnistunut.")
+    return render_template("error.html", message="Viestin lähetys ei onnistunut.")
 
 @app.route("/new_comment/<message_id>")
 def new_comment(message_id):
-    message_id = message_id
     return render_template("new_comment.html", message_id=message_id)
 
 @app.route("/send_comment", methods=["POST"])
@@ -96,20 +96,18 @@ def send_comment():
     message_id = request.form["message_id"]
     if comments.send(content, message_id):
         return redirect(url_for("chat", message_id=message_id))
-    else:
-        return render_template("error.html", message="Kommentin lisääminen ei onnistunut.")
-    
+    return render_template("error.html", message="Kommentin lisääminen ei onnistunut.")
+
 @app.route("/filter_by_topic/<topic>")
 def filter_by_topic(topic):
-    topic = topic
     if topic == "None":
         return redirect("/")
     user_is_admin = users.is_admin()
     filter_result = messages.filter_by_topic(topic)
     if filter_result == []:
         return render_template("error.html", message="Ei vielä aloitettuja keskusteluita.")
-    else:
-        return render_template("filter_by_topic.html", user_is_admin = user_is_admin, messages = filter_result)
+    return render_template("filter_by_topic.html",
+                            user_is_admin = user_is_admin, messages = filter_result)
 
 @app.route("/search")
 def search():
@@ -128,7 +126,7 @@ def remove_comment(comment_id):
     if comments.delete_comment(comment_id):
         flash("Viesti poistettu")
         return redirect(request.referrer)
-    
+
 @app.route("/edit_comment/<message_id>/<comment_id>")
 def edit_comment(comment_id, message_id):
     return render_template("edit_comment.html", comment_id=comment_id, message_id=message_id)
@@ -141,9 +139,8 @@ def send_comment_edit():
     message_id = request.form["message_id"]
     if comments.edit_comment(comment_id, edit):
         return redirect(url_for("chat", message_id=message_id))
-    else:
-        return render_template("error.html", message="Kommentin muokkaaminen ei onnistunut.")
-    
+    return render_template("error.html", message="Kommentin muokkaaminen ei onnistunut.")
+
 @app.route("/edit_message/<message_id>")
 def edit_message(message_id):
     return render_template("edit_message.html", message_id=message_id)
@@ -155,40 +152,35 @@ def send_message_edit():
     message_id = request.form["message_id"]
     if messages.edit_message(message_id, edit):
         return redirect(url_for("chat", message_id=message_id))
-    else:
-        return render_template("error.html", message="Viestin muokkaaminen ei onnistunut.")
-    
+    return render_template("error.html", message="Viestin muokkaaminen ei onnistunut.")
+
 @app.route("/up_vote_message/<message_id>")
 def up_vote(message_id):
     if messages.vote_message(1, message_id):
         return redirect(request.referrer)
-    else:
-        flash("Olet jo äänestänyt")
-        return redirect(request.referrer)
-    
+    flash("Olet jo äänestänyt")
+    return redirect(request.referrer)
+
 @app.route("/down_vote_message/<message_id>")
 def down_vote(message_id):
     if messages.vote_message(-1, message_id):
         return redirect(request.referrer)
-    else:
-        flash("Olet jo äänestänyt")
-        return redirect(request.referrer)
-    
+    flash("Olet jo äänestänyt")
+    return redirect(request.referrer)
+
 @app.route("/up_vote_comment/<message_id>/<comment_id>")
 def up_vote_comment(message_id, comment_id):
     if comments.vote_comment(1, message_id, comment_id):
         return redirect(request.referrer)
-    else:
-        flash("Olet jo äänestänyt")
-        return redirect(request.referrer)
-    
+    flash("Olet jo äänestänyt")
+    return redirect(request.referrer)
+
 @app.route("/down_vote_comment/<message_id>/<comment_id>")
 def down_vote_comment(message_id, comment_id):
     if comments.vote_comment(-1, message_id, comment_id):
         return redirect(request.referrer)
-    else:
-        flash("Olet jo äänestänyt")
-        return redirect(request.referrer)
+    flash("Olet jo äänestänyt")
+    return redirect(request.referrer)
 
 def check_csrf_token():
     if session["csrf_token"] != request.form["csrf_token"]:
