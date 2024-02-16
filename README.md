@@ -16,12 +16,12 @@ Sovelluksen ominaisuudet:
 ## Sovelluksen nykyinen tilanne
 
 - Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
-- Käyttäjä näkee sovelluksen etusivulla listan viestiketjuista ja mihin keskustelualueeseen mikin ketju kuuluu sekä viestiketjun aloitusajankohdan.
+- Käyttäjä näkee sovelluksen etusivulla listan viestiketjuista ja mihin keskustelualueeseen mikin ketju kuuluu sekä viestiketjun aloitusajankohdan, vastauksien määrän ja viimeksi lähetetyn vastauksen ajankohdan.
 - Käyttäjä voi luoda alueelle uuden ketjun antamalla ketjun otsikon ja aloitusviestin sisällön.
 - Käyttäjä voi kirjoittaa uuden viestin olemassa olevaan ketjuun.
 - Käyttäjä voi muokata luomansa ketjun otsikkoa sekä lähettämänsä viestin sisältöä. Käyttäjä voi myös poistaa ketjun tai viestin.
 - Käyttäjä voi etsiä kaikki keskustelun aloitukset, joiden osana on annettu sana.
-- Käyttäjä voi äänestää viestejä. 
+- Käyttäjä voi antaa kullekin viestille yhden äänen ja annettujen äänien määrä näkyy kunkin viestin kohdalla.
 - Ylläpitäjä voi lisätä keskustelualueita.
 - Ylläpitäjä voi poistaa myös muiden lähettämiä ketjuja ja viestejä.
 
