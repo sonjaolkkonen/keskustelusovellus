@@ -52,6 +52,7 @@
                     <br>
                     <a href="/" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Palaa etusivulle</a>
                     <br><br>
+                    {% if messages %}
                     {% for message in messages %}
                     <div class="p-1 gap-4">
                     <div class="list-group">
@@ -68,6 +69,11 @@
                     </div>
                     </div>
                     {% endfor %}
+                    {% else %}
+                    <p class="lead">
+                        Ei hakutuloksia.
+                    </p>
+                    {% endif %}
             </div>
             </div>
         </div>

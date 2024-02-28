@@ -48,7 +48,8 @@ def search(query):
     sql = text("""SELECT M.id, M.headline, M.content, M.user_id, M.sent_at, T.name, U.username,
                M.up_votes, M.down_votes
                FROM messages M, topics T, users U
-               WHERE M.user_id=U.id AND M.topic_id=T.id AND M.content LIKE :query
+               WHERE M.user_id=U.id AND M.topic_id=T.id AND
+               (M.content iLIKE :query OR M.headline iLIKE :query)
                AND M.visible=1 ORDER BY M.id""")
     result = db.session.execute(sql, {"query":"%"+query+"%"})
     search_result = result.fetchall()
