@@ -49,7 +49,7 @@ def search(query):
                M.up_votes, M.down_votes
                FROM messages M, topics T, users U
                WHERE M.user_id=U.id AND M.topic_id=T.id AND
-               (M.content iLIKE :query OR M.headline iLIKE :query)
+               (M.content iLIKE :query OR M.headline iLIKE :query OR M.id IN (SELECT C.message_id FROM comments C WHERE C.content iLike :query AND C.visible=1))
                AND M.visible=1 ORDER BY M.id""")
     result = db.session.execute(sql, {"query":"%"+query+"%"})
     search_result = result.fetchall()
