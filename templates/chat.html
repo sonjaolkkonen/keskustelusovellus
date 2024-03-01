@@ -4,7 +4,7 @@
     <div class="row">
     <div class="col-8">
         <p>
-            <h1 class="display-6">{{ thread[0][1] }}</h1>
+            <h1 class="display-6 text-break">{{ thread[0][1] }}</h1>
             {% if session.user_id==thread[0][4] %}
             <br>
             <div class="d-flex justify-content-end">
@@ -30,7 +30,7 @@
                 <small class="opacity-75 text-end mx-2">{{ thread[0][-1] }}</small>
             </div>
             <br><br>
-            {{ thread[0][2] }}
+            <p class="text-break">{{ thread[0][2] }}</p>
             <br><br><br>
             {% if session.user_id %}
             <a href="/new_comment/{{ thread[0][0] }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Kommentoi</a>
@@ -63,7 +63,7 @@
                 <small class="opacity-75 text-end mx-2">{{ comment.down_votes }}</small>
             </div>
             <br>
-            {{ comment.content }}
+            <p class="text-break">{{ comment.content }}</p>
             <br><br><br>
             {% if session.user_id==comment.user_id %}
             <a href="/edit_comment/{{ thread[0][0] }}/{{ comment.id }}/{{ comment.content }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Muokkaa</a>
