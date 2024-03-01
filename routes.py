@@ -79,6 +79,9 @@ def new():
 def send():
     check_csrf_token()
     headline = request.form["headline"]
+    if len(headline) > 80:
+        flash("Otsikko on liian pitkä \n (yli 80 merkkiä)")
+        return redirect(request.referrer)
     message_topic = request.form["topic"]
     content = request.form["content"]
     if messages.send(message_topic, content, headline):
@@ -153,6 +156,9 @@ def edit_headline(message_id, headline):
 def send_headline_edit():
     check_csrf_token()
     edit = request.form["headline"]
+    if len(edit) > 80:
+        flash("Otsikko on liian pitkä \n (yli 80 merkkiä)")
+        return redirect(request.referrer)
     message_id = request.form["message_id"]
     if messages.edit_headline(message_id, edit):
         return redirect(url_for("chat", message_id=message_id))

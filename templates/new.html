@@ -3,6 +3,7 @@
 <div class="container">
     <div class="row">
     <div class="col-8">
+        {% include "message.html" %}
         <form action="/send" method="POST">
             <select class="form-select" name="topic">
                 <option selected>Valitse alue</option>
@@ -12,7 +13,7 @@
             </select>
             <div class="mb-3">
                 <label for="headline" class="form-label"></label>
-                <input type="text" class="form-control" name="headline" placeholder="Otsikko" required="">
+                <input type="text" class="form-control" name="headline" placeholder="Otsikko max 80 merkkiä" required="">
             </div>
             <div class="mb-3">
                 <label for="content" class="form-label"></label>
