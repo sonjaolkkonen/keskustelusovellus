@@ -127,9 +127,9 @@ def remove_comment(comment_id):
         flash("Viesti poistettu")
         return redirect(request.referrer)
 
-@app.route("/edit_comment/<message_id>/<comment_id>")
-def edit_comment(comment_id, message_id):
-    return render_template("edit_comment.html", comment_id=comment_id, message_id=message_id)
+@app.route("/edit_comment/<message_id>/<comment_id>/<content>")
+def edit_comment(comment_id, message_id, content):
+    return render_template("edit_comment.html", comment_id=comment_id, message_id=message_id, content=content)
 
 @app.route("/send_comment_edit", methods=["POST"])
 def send_comment_edit():
@@ -141,9 +141,9 @@ def send_comment_edit():
         return redirect(url_for("chat", message_id=message_id))
     return render_template("error.html", message="Kommentin muokkaaminen ei onnistunut.")
 
-@app.route("/edit_message/<message_id>")
-def edit_message(message_id):
-    return render_template("edit_message.html", message_id=message_id)
+@app.route("/edit_message/<message_id>/<content>")
+def edit_message(message_id, content):
+    return render_template("edit_message.html", message_id=message_id, content=content)
 
 @app.route("/edit_headline/<message_id>/<headline>")
 def edit_headline(message_id, headline):

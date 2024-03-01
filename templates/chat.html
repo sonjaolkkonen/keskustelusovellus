@@ -36,7 +36,7 @@
             <a href="/new_comment/{{ thread[0][0] }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Kommentoi</a>
             {% endif %}
             {% if session.user_id==thread[0][4] %}
-            <a href="/edit_message/{{ thread[0][0] }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Muokkaa</a>
+            <a href="/edit_message/{{ thread[0][0] }}/ {{ thread[0][2] }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Muokkaa</a>
             {% endif %}
             {% if session.user_id==thread[0][4] or user_is_admin %}
             <a href="/remove_message/{{ thread[0][0] }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Poista</a>
@@ -66,7 +66,7 @@
             {{ comment.content }}
             <br><br><br>
             {% if session.user_id==comment.user_id %}
-            <a href="/edit_comment/{{ thread[0][0] }}/{{ comment.id }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Muokkaa</a>
+            <a href="/edit_comment/{{ thread[0][0] }}/{{ comment.id }}/{{ comment.content }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Muokkaa</a>
             {% endif %}
             {% if session.user_id==comment.user_id or user_is_admin %}
             <a href="/remove_comment/{{ comment.id }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Poista</a>

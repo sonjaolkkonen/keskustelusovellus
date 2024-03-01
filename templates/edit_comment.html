@@ -6,9 +6,9 @@
         <form action="/send_comment_edit" method="POST">
             <div class="mb-3">
                 <label for="content" class="form-label"></label>
-                <textarea class="form-control" name="content" rows="3" required=""></textarea>
+                <textarea class="form-control" name="content" rows="3" required="">{{ content }}</textarea>
             </div>
-                <button type="submit" class="btn btn-primary text-uppercase rounded-pill mb-2 mt-2 border-0 shadow-sm">Lähetä</button>
+                <button type="submit" class="btn btn-primary text-uppercase rounded-pill mb-2 mt-2 border-0 shadow-sm">Muokkaa</button>
                 <input type="hidden" name="message_id" value="{{ message_id }}">
                 <input type="hidden" name="comment_id" value="{{ comment_id }}">
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
