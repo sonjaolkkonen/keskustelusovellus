@@ -73,6 +73,14 @@ def edit_message(message_id, edit):
         return True
     return False
 
+def edit_headline(message_id, edit):
+    if is_users_message(message_id):
+        sql = text("UPDATE messages SET headline=:edit WHERE id=:message_id")
+        db.session.execute(sql, {"edit":edit, "message_id":message_id})
+        db.session.commit()
+        return True
+    return False
+
 def is_users_message(message_id):
     user_id = users.user_id()
     sql = text("""SELECT id, headline, content, user_id, topic_id, sent_at

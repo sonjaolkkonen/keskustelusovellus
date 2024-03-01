@@ -145,6 +145,19 @@ def send_comment_edit():
 def edit_message(message_id):
     return render_template("edit_message.html", message_id=message_id)
 
+@app.route("/edit_headline/<message_id>/<headline>")
+def edit_headline(message_id, headline):
+    return render_template("edit_headline.html", message_id=message_id, headline=headline)
+
+@app.route("/send_headline_edit", methods=["POST"])
+def send_headline_edit():
+    check_csrf_token()
+    edit = request.form["headline"]
+    message_id = request.form["message_id"]
+    if messages.edit_headline(message_id, edit):
+        return redirect(url_for("chat", message_id=message_id))
+    return render_template("error.html", message="Otsikon muokkaaminen ei onnistunut.")
+
 @app.route("/send_message_edit", methods=["POST"])
 def send_message_edit():
     check_csrf_token()

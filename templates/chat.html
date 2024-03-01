@@ -5,6 +5,13 @@
     <div class="col-8">
         <p>
             <h1 class="display-6">{{ thread[0][1] }}</h1>
+            {% if session.user_id==thread[0][4] %}
+            <br>
+            <div class="d-flex justify-content-end">
+                <a href="/edit_headline/{{ thread[0][0] }}/ {{ thread[0][1] }}" class="btn btn-primary text-uppercase rounded-pill border-0 shadow-sm">Muokkaa otsikkoa</a>
+            </div>
+            <br>
+            {% endif %}
             <br>
             {% include "message.html" %}
             <small class="opacity-75 text-end">{{ thread[0][3].strftime("%d.%m.%Y | %H:%M") }}</small>
