@@ -19,7 +19,7 @@ def get_amount_of_comments():
     return result.fetchall()
 
 def get_comment_time():
-    locale.setlocale(locale.LC_TIME, 'fi_FI.UTF-8')
+    locale.setlocale(locale.LC_TIME, "fi_FI.UTF-8")
     sql = text("""SELECT message_id, sent_at FROM comments
                WHERE id IN (SELECT MAX(id) FROM comments
                WHERE visible=1 GROUP BY message_id)""")

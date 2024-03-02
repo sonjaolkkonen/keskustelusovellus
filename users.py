@@ -52,7 +52,7 @@ def check_if_voted(user_id, message_id):
     sql = text("""SELECT message_id, user_id FROM votes
                WHERE message_id=:message_id AND user_id=:user_id""")
     result = db.session.execute(sql, {"message_id":message_id, "user_id":user_id})
-    if result.fetchone() is not None:
+    if result.fetchone():
         return True
     return False
 
@@ -67,6 +67,6 @@ def check_if_voted_comment(user_id, comment_id):
     sql = text("""SELECT comment_id, user_id FROM votes
                WHERE comment_id=:comment_id AND user_id=:user_id""")
     result = db.session.execute(sql, {"comment_id":comment_id, "user_id":user_id})
-    if result.fetchone() is not None:
+    if result.fetchone():
         return True
     return False

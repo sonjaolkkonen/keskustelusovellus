@@ -13,8 +13,8 @@ def index():
     messages_list = messages.get_list()
     amount_of_comments = comments.get_amount_of_comments()
     times = comments.get_comment_time()
-    return render_template("index.html", user_is_admin = user_is_admin, topics = topics_list,
-                           messages = messages_list, comments=amount_of_comments, times=times)
+    return render_template("index.html", user_is_admin=user_is_admin, topics=topics_list,
+                           messages=messages_list, comments=amount_of_comments, times=times)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -52,7 +52,7 @@ def logout():
 def topic():
     user_is_admin = users.is_admin()
     if users.user_id() and user_is_admin:
-        return render_template("topic.html", user_is_admin = user_is_admin)
+        return render_template("topic.html", user_is_admin=user_is_admin)
     return redirect("/")
 
 @app.route("/create_topic", methods=["POST"])
@@ -67,13 +67,13 @@ def chat(message_id):
     message_thread = messages.get_thread(message_id)
     message_comments = comments.get_comments(message_id)
     user_is_admin = users.is_admin()
-    return render_template("chat.html", thread = message_thread,
-                           comments = message_comments, user_is_admin = user_is_admin)
+    return render_template("chat.html", thread=message_thread,
+                           comments=message_comments, user_is_admin=user_is_admin)
 
 @app.route("/new")
 def new():
     topics_list = topics.get_list()
-    return render_template("new.html", topics = topics_list)
+    return render_template("new.html", topics=topics_list)
 
 @app.route("/send", methods=["POST"])
 def send():
@@ -110,7 +110,7 @@ def filter_by_topic(topic):
     if filter_result == []:
         return render_template("error.html", message="Ei vielä aloitettuja keskusteluita.")
     return render_template("filter_by_topic.html",
-                            user_is_admin = user_is_admin, messages = filter_result)
+                            user_is_admin=user_is_admin, messages=filter_result)
 
 @app.route("/search")
 def search():
