@@ -132,7 +132,8 @@ def remove_comment(comment_id):
 
 @app.route("/edit_comment/<message_id>/<comment_id>/<content>")
 def edit_comment(comment_id, message_id, content):
-    return render_template("edit_comment.html", comment_id=comment_id, message_id=message_id, content=content)
+    return render_template("edit_comment.html", comment_id=comment_id, message_id=message_id,
+                           content=content)
 
 @app.route("/send_comment_edit", methods=["POST"])
 def send_comment_edit():
