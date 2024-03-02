@@ -4,7 +4,7 @@
 }
 
 .bg-image {
-  background-image: url('https://images.pexels.com/photos/2924738/pexels-photo-2924738.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=11');
+  background-image: url("https://images.pexels.com/photos/2924738/pexels-photo-2924738.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=11");
   background-size: cover;
   background-position: center center;
 }
@@ -21,12 +21,13 @@
     border-color: #ff8364;
   }
 
-.navbar-custom .navbar-brand,
-.navbar-custom .navbar-text {
-      color: green;
-  }
+.btn:not(:disabled):not(:disabled):active {
+    color: #ff8364;
+    background-color: #fff;
+    border-color: #ff8364;
+ }
 
-.dropdown-item:active {
+.dropdown-item:not(:disabled):not(:disabled):active {
     background-color: #ff8364 !important;
 }
 
